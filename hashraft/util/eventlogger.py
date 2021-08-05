@@ -8,28 +8,32 @@ class EventLogger:
         self.mutex = threading.Lock ()
         self.dataLog = []
 
-    def info (self, message):
+    def info (self, message, *args):
         self.mutex.acquire ()
         date = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
-        self.dataLog.append (date + " [INFO]: " + str(message))
+        self.dataLog.append (date + " [INFO] " + str(message))
+        if args: print ("   " + self.getLastEntryNoTime ())
         self.mutex.release ()
     
-    def warning (self, message):
+    def warning (self, message, *args):
         self.mutex.acquire ()
         date = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
-        self.dataLog.append (date + " [" + colored ("WARN", "yellow") + "]: " + str(message))
+        self.dataLog.append (date + " [" + colored ("WARN", "yellow") + "] " + str(message))
+        if args: print ("   " + self.getLastEntryNoTime ())
         self.mutex.release ()
     
-    def error (self, message):
+    def error (self, message, *args):
         self.mutex.acquire ()
         date = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
-        self.dataLog.append (date + " [" + colored ("ERRO", "red") + "]: " + str(message))
+        self.dataLog.append (date + " [" + colored ("ERRO", "red") + "] " + str(message))
+        if args: print ("   " + self.getLastEntryNoTime ())
         self.mutex.release ()
     
-    def okay (self, message):
+    def okay (self, message, *args):
         self.mutex.acquire ()
         date = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
-        self.dataLog.append (date + " [" + colored ("OKAY", "green") + "]: " + str(message))
+        self.dataLog.append (date + " [" + colored ("OKAY", "green") + "] " + str(message))
+        if args: print ("   " + self.getLastEntryNoTime ())
         self.mutex.release ()
 
     def getCurrent (self):
@@ -46,6 +50,7 @@ class EventLogger:
    
     def dump (self):
         self.mutex.acquire ()
+        print ()
         for entry in self.dataLog:
             print (entry)
         self.dataLog = []

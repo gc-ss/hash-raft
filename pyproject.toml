@@ -2,6 +2,7 @@
 requires = [
     "setuptools>=42",
     "wheel", 
-    "termcolor"
+    "termcolor", 
+    "pyyaml"
 ]
 build-backend = "setuptools.build_meta"
