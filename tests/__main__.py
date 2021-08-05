@@ -1,15 +1,15 @@
 import unittest
-from .loggingTest import LoggingTest
+from pydoc import locate
 import pkgutil
 
-
-test_classes = [LoggingTest]
 
 def suite ():
     loader = unittest.TestLoader ()
     suite = unittest.TestSuite ()
 
-    for test_class in test_classes:
+    module_names = ["tests."+name+"."+name for _, name, _ in pkgutil.iter_modules(['tests']) if name != "__main__" and name != "context"]
+
+    for test_class in [locate(x) for x in module_names]:
         tests = loader.loadTestsFromTestCase (test_class)
         suite.addTests (tests)
 
