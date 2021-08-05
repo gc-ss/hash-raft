@@ -1,12 +1,12 @@
 from .context import hashraft
-from hashraft.util.logging.logger import Logger
+from hashraft.util.eventlogger import EventLogger
 import unittest
 import threading
 
 class LoggingTest (unittest.TestCase):
 
     def setUp (self):
-        self.testLogger = Logger ()
+        self.testLogger = EventLogger ()
 
     def tearDown (self):
         del self.testLogger

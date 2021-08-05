@@ -1,7 +1,7 @@
 import threading
 from datetime import datetime
 
-class Logger:
+class EventLogger:
     
     def __init__ (self):
         self.mutex = threading.Lock ()
