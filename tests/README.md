@@ -2,7 +2,7 @@
 
 ## How to run
 In a terminal with Python 3 installed, navigate to this projects root directory. 
-Enter the command: `python3 -m tests.run` in your terminal.
+Enter the command: `python3 -m tests` in your terminal.
 
 ## How to add your own unit tests
 1. Create a new file under `/tests`, name if after the file you would like to test.
@@ -11,7 +11,7 @@ Enter the command: `python3 -m tests.run` in your terminal.
 4. Add an import statement for unittest: `import unittest`
 5. Create a new class, named however you'd like, that inherits `unittest.TestCase`. For example: `class Name (unittest.TestCase):`
 6. Each class method you add becomes it's own unit test. If you need class wide set up and tear down you can define that by implementing the `setUp (self)` and `tearDown (self)` methods. 
-7. Add your class name to the `test_classes` list in `run.py`.
+7. Add your class name to the `test_classes` list in `__main__.py`.
 
 ## What is currently tested
 - EventLogger

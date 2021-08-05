@@ -1,5 +1,6 @@
 import threading
 from datetime import datetime
+from termcolor import colored
 
 class EventLogger:
     
@@ -16,13 +17,13 @@ class EventLogger:
     def warning (self, message):
         self.mutex.acquire ()
         date = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
-        self.dataLog.append ("[WARNING] " + date + " " + message)
+        self.dataLog.append ("[" + colored ("WARNING", "yellow") + "] " + date + " " + message)
         self.mutex.release ()
     
     def error (self, message):
         self.mutex.acquire ()
         date = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
-        self.dataLog.append ("[ERROR] " + date + " " + message)
+        self.dataLog.append ("[" + colored ("ERROR", "red") + "] " + date + " " + message)
         self.mutex.release ()
 
     def getCurrent (self):
