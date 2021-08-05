@@ -19,12 +19,12 @@ class LoggingTest (unittest.TestCase):
     def test_warning (self):
         self.testLogger.warning ("test message")
         self.assertIn ("test message", self.testLogger.getCurrentAsString ())
-        self.assertIn ("WARNING", self.testLogger.getCurrentAsString ())
+        self.assertIn ("WARN", self.testLogger.getCurrentAsString ())
     
     def test_error (self):
         self.testLogger.error ("test message")
         self.assertIn ("test message", self.testLogger.getCurrentAsString ())
-        self.assertIn ("ERROR", self.testLogger.getCurrentAsString ())
+        self.assertIn ("ERRO", self.testLogger.getCurrentAsString ())
 
     def test_thread (self):
         testThread = threading.Thread (target=(lambda logger: logger.info ("in thread")), args=[self.testLogger])

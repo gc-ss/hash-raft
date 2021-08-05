@@ -11,19 +11,19 @@ class EventLogger:
     def info (self, message):
         self.mutex.acquire ()
         date = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
-        self.dataLog.append ("[INFO] " + date + " " + message)
+        self.dataLog.append (date + " [INFO]: " + str(message))
         self.mutex.release ()
     
     def warning (self, message):
         self.mutex.acquire ()
         date = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
-        self.dataLog.append ("[" + colored ("WARNING", "yellow") + "] " + date + " " + message)
+        self.dataLog.append (date + " [" + colored ("WARN", "yellow") + "]: " + str(message))
         self.mutex.release ()
     
     def error (self, message):
         self.mutex.acquire ()
         date = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
-        self.dataLog.append ("[" + colored ("ERROR", "red") + "] " + date + " " + message)
+        self.dataLog.append (date + " [" + colored ("ERRO", "red") + "]: " + str(message))
         self.mutex.release ()
 
     def getCurrent (self):
