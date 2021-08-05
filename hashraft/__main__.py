@@ -1,14 +1,24 @@
 from hashraft.util.eventlogger import EventLogger
+import hashraft.terminal as tm
 import sys
 
 def interactive (logger):
     logger.info ("Started in interactive")
     while (True):
-        userInput = input (">> ")
-        logger.info ("User Input: \"" + userInput + "\"")
-        if userInput == "quit":
-            return
-        
+        try:
+            userInput = input (">> ")
+            logger.info ("User Input: \"" + userInput + "\"")
+            try:
+                exec ("tm." + userInput + "(logger)")
+            except Exception as e:
+                if type(e) is tm.TerminalQuit: return
+                else: 
+                    logger.warning ("Unknown Command: \"" + userInput + "\"")
+                    print (logger.getLastEntryNoTime ())
+        except KeyboardInterrupt:
+            print ()
+            logger.warning ("Exiting on keyboard interrupt.")
+            return 
 
 def quickstart (logger, arguments):
     logger.info ("Started with arguments")
@@ -24,7 +34,6 @@ if __name__ == '__main__':
     else:
         interactive (logger)
 
-    logger.warning ("Terminated!")
-    logger.error ("Testing")
+    logger.warning ("Finished.")
     logger.dump ()
     

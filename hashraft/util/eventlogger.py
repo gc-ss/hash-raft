@@ -25,12 +25,24 @@ class EventLogger:
         date = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
         self.dataLog.append (date + " [" + colored ("ERRO", "red") + "]: " + str(message))
         self.mutex.release ()
+    
+    def okay (self, message):
+        self.mutex.acquire ()
+        date = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
+        self.dataLog.append (date + " [" + colored ("OKAY", "green") + "]: " + str(message))
+        self.mutex.release ()
 
     def getCurrent (self):
         return self.dataLog
     
     def getCurrentAsString (self):
         return ''.join(self.dataLog)
+    
+    def getLastEntry (self):
+        return str(self.dataLog[-1])
+    
+    def getLastEntryNoTime (self):
+        return str(self.dataLog[-1][20:])
    
     def dump (self):
         self.mutex.acquire ()

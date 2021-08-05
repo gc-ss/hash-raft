@@ -25,6 +25,17 @@ class LoggingTest (unittest.TestCase):
         self.testLogger.error ("test message")
         self.assertIn ("test message", self.testLogger.getCurrentAsString ())
         self.assertIn ("ERRO", self.testLogger.getCurrentAsString ())
+    
+    def test_OKAY (self):
+        self.testLogger.okay ("test message")
+        self.assertIn ("test message", self.testLogger.getCurrentAsString ())
+        self.assertIn ("OKAY", self.testLogger.getCurrentAsString ())
+
+    def test_get_last (self):
+        self.testLogger.error ("test message")
+        self.testLogger.error ("last")
+        self.assertIn ("last", self.testLogger.getLastEntry ())
+        self.assertEqual ("[", self.testLogger.getLastEntryNoTime ()[0])
 
     def test_thread (self):
         testThread = threading.Thread (target=(lambda logger: logger.info ("in thread")), args=[self.testLogger])
