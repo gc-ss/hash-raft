@@ -8,11 +8,13 @@ from hashraft.util.LoggingLevel import LoggingLevel
 import threading
 import socket as so
 import sys
+import os.path
 
 
 configuration = []
 runningNodes = []
 nodeThreads = []
+DEFAULTCONFIG = "raftConfig.yaml"
 
 def quit (*args):
     raise TerminalQuit
@@ -46,7 +48,13 @@ def start (logger, *args):
 
 def create (logger, *args):
 
-    file = input ("Please enter a config file: ") if len (args) == 0 else args[0]
+    
+    #Attempt Default Configuration File
+    if os.path.isfile (DEFAULTCONFIG):
+        logger.okay ("Default [" + str(DEFAULTCONFIG) + "] Configuration File Detected", True)
+        file = DEFAULTCONFIG
+    else:
+        file = input ("Please enter a config file: ") if len (args) == 0 else args[0]
 
     try:
         raftDict = ConfigFactory.create (file).parse ()
@@ -55,7 +63,6 @@ def create (logger, *args):
         return
 
 
-    
     if raftDict["logging"]["level"]["root"] is not None:
         try:
             logger.setLevel(LoggingLevel[raftDict["logging"]["level"]["root"]])
