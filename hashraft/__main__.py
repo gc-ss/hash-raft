@@ -15,7 +15,7 @@ def interactive (logger):
             except Exception as e:
                 if type(e) is TerminalQuit: return
                 else: 
-                    logger.warning ("Unknown Command: \"" + userInput[0] + "\"", True)
+                    logger.warning ("Unknown Command: \"" + userInput[0] + "\"")
 
         except KeyboardInterrupt:
             print ()

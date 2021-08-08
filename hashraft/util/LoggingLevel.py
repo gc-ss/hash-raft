@@ -6,3 +6,4 @@ class LoggingLevel(Enum):
     INFO = 2
     WARN = 3
     ERROR = 4
+    OKAY = 5
