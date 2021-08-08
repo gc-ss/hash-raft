@@ -1,12 +1,30 @@
 import threading
+from .LoggingLevel import LoggingLevel
 from datetime import datetime
 from termcolor import colored
+
+
 
 class EventLogger:
     
     def __init__ (self):
         self.mutex = threading.Lock ()
         self.dataLog = []
+        self.loggingLevel = LoggingLevel.TRACE
+
+    def trace (self, message, *args):
+        self.mutex.acquire ()
+        date = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
+        self.dataLog.append (date + " [TRACE] " + str(message))
+        if args: print ("   " + self.getLastEntryNoTime ())
+        self.mutex.release ()
+    
+    def debug (self, message, *args):
+        self.mutex.acquire ()
+        date = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
+        self.dataLog.append (date + " [DEBUG] " + str(message))
+        if args: print ("   " + self.getLastEntryNoTime ())
+        self.mutex.release ()
 
     def info (self, message, *args):
         self.mutex.acquire ()
@@ -36,6 +54,12 @@ class EventLogger:
         if args: print ("   " + self.getLastEntryNoTime ())
         self.mutex.release ()
 
+    def setLevel (self, level):
+        self.loggingLevel = level
+
+    def getLevel (self):
+        return self.loggingLevel.name
+
     def getCurrent (self):
         return self.dataLog
     
@@ -55,3 +79,4 @@ class EventLogger:
             print (entry)
         self.dataLog = []
         self.mutex.release ()
+    

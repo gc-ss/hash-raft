@@ -3,9 +3,12 @@ from hashraft.util.Exceptions import *
 from hashraft.util.config import ConfigFactory
 from .server import RaftServer
 from timeit import default_timer as timer
+from hashraft.util.LoggingLevel import LoggingLevel
+
 import threading
 import socket as so
 import sys
+
 
 configuration = []
 runningNodes = []
@@ -51,8 +54,18 @@ def create (logger, *args):
         logger.warning (str(e), True)
         return
 
+
+    
+    if raftDict["logging"]["level"]["root"] is not None:
+        try:
+            logger.setLevel(LoggingLevel[raftDict["logging"]["level"]["root"]])
+            logger.okay("Logging level set to "  + logger.getLevel(), True)
+        except Exception as e:
+            logger.warning (str(e), True)
+            return
+
     configuration.clear ()
-    for k,v in raftDict.items():
+    for k,v in raftDict["nodes"].items():
         configuration.append (RaftServer (k, v["ip"], v["port"], logger))   
 
     logger.okay ("Raft configuration set.", True)
