@@ -72,8 +72,9 @@ def create (logger, *args):
 
     configuration.clear ()
 
-    for k,v in raftDict.items():
-        configuration.append (RaftServer (k, v["ip"], v["port"], raftDict, logger))   
+    for k,v in raftDict["nodes"].items():
+        print (v)
+        configuration.append (RaftServer (k, v["ip"], v["port"], raftDict["nodes"], logger))   
 
 
     logger.okay ("Raft configuration set.")
@@ -118,13 +119,39 @@ def status (logger, *args):
     except BaseException as e:
         print (sys.exc_info()[0])
 
-
+def check (logger, *args):
+    if len(args) != 2:
+        logger.error ("Incorrect number of arguments.")
+    try:
+        ip = None
+        port = None
+        toCheck = None
+        for node in runningNodes:
+            if node.name == args[0]:
+                ip = node.ip
+                port = node.port
+            if node.name == args[1]:
+                toCheck = node.name
+            if ip != None and toCheck != None:
+                socket = so.socket ()
+                socket.connect ((ip, port))
+                socket.send ( str.encode ("check " + toCheck))
+                stat = socket.recv (1024).decode ()
+                if stat == "good":
+                    logger.okay ("Good!")
+                else:
+                    logger.warning ("Not Good!")
+                socket.close ()
+                return
+    except BaseException as e:
+        print (sys.exc_info()[0])
 
 def help (*args):
     print ("\n   Below is a list of commands and a brief description:")
     print ("      create | Takes a file and creates a new raft configuration.")
     print ("      start  | Starts the current raft configuration.")
     print ("      status | Lists the status of the current running nodes.")
+    print ("      check  | Takes two node names as arguments and has the first one call the second one to check connections.")
     print ("      quit   | Ends the current temrinal session.")
     print ()
 

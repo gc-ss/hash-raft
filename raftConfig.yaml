@@ -1,7 +1,7 @@
 ---
 logging:
   level:
-    root: INFO
+    root: WARN
 nodes:
   node1:
     ip: "localhost"

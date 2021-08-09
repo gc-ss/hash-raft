@@ -9,7 +9,6 @@ class RaftState (Enum):
     follower = 2
     candidate = 3
 
-electionTimeout = 76
 
 # TODO: implement raft!
 
@@ -66,11 +65,22 @@ class RaftServer:
         if data == "stop":
             return False
         elif data == "status":
-            time.sleep (random.random ())
+            # time.sleep (random.random ())
             connection.send (b'')
         elif "GET / HTTP" in data:
             connection.send ( str.encode ("HTTP/1.1 403 Forbidden\n\n"))
             connection.shutdown (so.SHUT_RDWR)
+        elif "check" in data:
+            nodeToCall = data.split(" ")[1]
+            socket = so.socket ()
+            socket.connect ((self.nodes[nodeToCall]["ip"], self.nodes[nodeToCall]["port"]))
+            socket.send (str.encode ("status"))
+            socket.settimeout (5)
+            try:
+                socket.recv (2)
+                connection.send ( str.encode ("good"))
+            except so.timeout:
+                connection.send ( str.encode ("bad"))
         return True
 
 
