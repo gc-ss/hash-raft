@@ -53,7 +53,7 @@ def create (logger, *args):
 
     configuration.clear ()
     for k,v in raftDict.items():
-        configuration.append (RaftServer (k, v["ip"], v["port"], logger))   
+        configuration.append (RaftServer (k, v["ip"], v["port"], raftDict, logger))   
 
     logger.okay ("Raft configuration set.", True)
 

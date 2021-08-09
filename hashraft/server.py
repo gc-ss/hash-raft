@@ -1,15 +1,29 @@
-import socket as so
 from hashraft.util.Exceptions import *
+from enum import Enum
+import socket as so
 import time
 import random
 
+class RaftState (Enum):
+    leader = 1
+    follower = 2
+    candidate = 3
+
+electionTimeout = 76
+
+# TODO: implement raft!
+
 class RaftServer:
-    def __init__ (self, name, ip, port, logger):
+    def __init__ (self, name, ip, port, nodes, logger):
         self.name = name
         self.ip = ip
         self.port = port
+        self.nodes = nodes
         self.logger = logger
         self.addressStr = str(ip) + ":" + str(port)
+        self.currentTerm = 1
+        self.termLog = []
+        self.state = RaftState.follower
 
     def create (self):
         self.socket = so.socket ()
