@@ -2,7 +2,8 @@ import json
 from . import config
 import random as random
 
-class voteResult:
+
+class appendEntriesResult:
 
     term = None
     success = None
@@ -11,7 +12,7 @@ class voteResult:
         self.term = term
         self.success = success
 
-class appendEntriesResult:
+class voteResult:
 
     term = None
     voteGranted = None
@@ -53,6 +54,9 @@ class Raft:
         #TODO: If an existing entry conflicts with a new one (same index but different terms), delete the existing entry and all that follow it 
         #TODO: Append any new entries not already in the log
         #TODO: If leaderCommit > commitIndex, set commitIndex = min(leaderCommit, index of last new entry)
+
+    def installSnapshot():
+        pass
 
     def load (self):
         with open(config.SAVEFILE, 'r') as f:
