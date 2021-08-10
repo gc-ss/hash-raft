@@ -4,6 +4,8 @@ from hashraft.util.config import ConfigFactory
 from .server import RaftServer
 from timeit import default_timer as timer
 from hashraft.util.LoggingLevel import LoggingLevel
+from . import config
+
 
 import threading
 import socket as so
@@ -14,7 +16,6 @@ import os.path
 configuration = []
 runningNodes = []
 nodeThreads = []
-DEFAULTCONFIG = "raftConfig.yaml"
 
 def quit (*args):
     raise TerminalQuit
@@ -49,9 +50,9 @@ def start (logger, *args):
 def create (logger, *args):
 
     #Attempt Default Configuration File
-    if os.path.isfile (DEFAULTCONFIG):
-        logger.okay ("Default [" + str(DEFAULTCONFIG) + "] Configuration File Detected")
-        file = DEFAULTCONFIG
+    if os.path.isfile (config.DEFAULTCONFIG):
+        logger.okay ("Default [" + str(config.DEFAULTCONFIG) + "] Configuration File Detected")
+        file = config.DEFAULTCONFIG
     else:
         file = input ("Please enter a config file: ") if len (args) == 0 else args[0]
 
