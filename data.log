@@ -1,0 +1,7 @@
+{
+  "currentTerm": 2,
+  "candidate": 1,
+  "lastLogIndex": 1,
+  "lastLogTerm": 1,
+  "votedFor": null
+}
