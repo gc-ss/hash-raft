@@ -3,7 +3,7 @@ from hashraft.util.eventlogger import EventLogger
 import unittest
 import threading
 
-class LoggingTest (unittest.TestCase):
+class loggingTest (unittest.TestCase):
 
     def setUp (self):
         self.testLogger = EventLogger ()
