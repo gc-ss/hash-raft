@@ -24,7 +24,8 @@ class raftLog:
         pass
     
     ###
-    # Raft defines committing as a majority of servers replying that they have committed
+    # Raft defines committing as a majority of servers replying that they have added to their own logs. Committed status means log entries are safe to
+    # move to state machine. Follower learn about commit status in AppendEntries RPC call from committedIndex attribute
     #####
     def commit (self, term, commandKey, commandValue):
         self.currentTerm = term

@@ -47,6 +47,11 @@ class Raft:
             self.votedFor = candidateId
             return voteResult(self.currentTerm, True)
 
+    ####
+    #  Would-be remotely invoked call used for leaders to communicate new log entries as well as used for heartbeat pings
+    #  in a heartbeat ping entries will be null
+    #  TODO: Return statement should be a broadcast to all nodes
+    ####
     def appendEntries (self, term, leaderId, prevLogIndex, prevLogTerm, entries, leaderCommit):
         if term < self.currentTerm:
             return appendEntries(self.currentTerm, False)
@@ -55,6 +60,9 @@ class Raft:
         #TODO: Append any new entries not already in the log
         #TODO: If leaderCommit > commitIndex, set commitIndex = min(leaderCommit, index of last new entry)
 
+    ####
+    #  Would-be remotely invoked call for a leader to replace or install a block of log entries at once 
+    ####
     def installSnapshot():
         pass
 
